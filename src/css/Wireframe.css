@@ -1,0 +1,127 @@
+.wf-container {
+  /* width: 90%; */
+  /* margin: 0 auto; */
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 2fr 6fr 2fr;
+}
+
+.btn-flat {
+  text-transform: none;
+  /* padding: 0px; */
+  width: 100%;
+}
+
+.first-container {
+  /* background: green; */
+  display: grid;
+  grid-template-rows: 5% 23% 72%;
+}
+
+.wireframe-properties {
+  display: flex;
+  justify-content: space-between;
+  border: 2px solid black;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+}
+
+.wireframe-dimensions {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.wireframe-control-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.second-container {
+  /* background: green; */
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  /* border: 2px solid black; */
+}
+
+.outer-box {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border: 2px solid black;
+  overflow: auto;
+  padding: 0;
+  display: flex;
+  background-color: #eaeaea;
+  /* align-items: center;
+  justify-content: center; */
+}
+
+.no-height-overflow {
+  align-items: center;
+}
+
+.no-width-overflow {
+  justify-content: center;
+}
+
+.inner-box {
+  position: absolute;
+  background-color: white;
+  /* left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); */
+  padding: 0;
+  border: 2px solid black;
+}
+
+.example-container {
+  background-color: white;
+  border: 2px solid black;
+  width: 120px;
+  height: 70px;
+  margin: 0 auto 10px auto;
+}
+
+.example-control-text {
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.property-text {
+  font-weight: bold;
+  margin-top: 5px;
+  text-align: left;
+}
+
+/* .property-grid > * {
+  margin-left: 20px !important;
+} */
+
+.properties-text {
+  margin-left: 20%;
+  margin-bottom: 5px;
+}
+
+.property {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: baseline;
+}
+
+.property-display {
+  margin-top: 10px;
+}
+
+.property-grid {
+  display: grid;
+  /* grid-template-columns: 1fr 2fr 3fr 4fr; */
+  grid-gap: 20px;
+}
+/* .wireframe-control {
+  
+} */

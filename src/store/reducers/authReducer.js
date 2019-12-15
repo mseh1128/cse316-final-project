@@ -1,4 +1,4 @@
-import * as actionCreators from '../actions/actionCreators'
+import * as actionCreators from '../actions/actionCreators';
 
 // REDUCERS ARE CALLED WHEN AN ACTION IS DISPATCHED,
 // THEIR JOB IS TO ADVANCE THE STATE. THEY WILL UPDATE
@@ -11,24 +11,24 @@ const authReducer = (state = initState, action) => {
     case actionCreators.LOGIN_ERROR:
       return {
         ...state,
-        authError: 'Login fail',
+        authError: 'Login fail'
       };
     case actionCreators.LOGIN_SUCCESS:
       return {
         ...state,
-        authError: null,
+        authError: null
       };
     case actionCreators.LOGOUT_SUCCESS:
       return state;
     case actionCreators.REGISTER_SUCCESS:
       return {
         ...state,
-        authError: null,
+        authError: null
       };
     case actionCreators.REGISTER_ERROR:
       return {
         ...state,
-        authError: action.err.message,
+        authError: action.err.message
       };
     default:
       return state;

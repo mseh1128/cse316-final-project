@@ -67,6 +67,7 @@ class HomeScreen extends Component {
   };
 
   goToWireframeScreen = wireframeID => {
+    // updateStoreContents;
     this.props.history.push('/wireframe/' + wireframeID);
   };
 
