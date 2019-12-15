@@ -1,18 +1,18 @@
 export const sortTasksHeader = (itemsToSort, sortType, ascending) => {
-  console.log("IN SORT TASKS HEADER: ");
-  console.log("IN SORT TASKS HEADER: ITEMSTOSORT");
+  console.log('IN SORT TASKS HEADER: ');
+  console.log('IN SORT TASKS HEADER: ITEMSTOSORT');
   console.log(itemsToSort);
-  console.log("IN SORT TASKS HEADER: SORT TYPE");
+  console.log('IN SORT TASKS HEADER: SORT TYPE');
   console.log(sortType);
-  console.log("IN SORT TASKS HEADER: ASCENDING");
+  console.log('IN SORT TASKS HEADER: ASCENDING');
   console.log(ascending);
-  if (sortType === "task") {
+  if (sortType === 'task') {
     if (ascending) {
       itemsToSort.sort((a, b) => taskSortComparator(a, b));
     } else {
       itemsToSort.sort((a, b) => taskSortComparator(a, b)).reverse();
     }
-  } else if (sortType === "due_date") {
+  } else if (sortType === 'due_date') {
     if (ascending) {
       itemsToSort.sort((a, b) => dueDateSortComparator(a, b));
     } else {

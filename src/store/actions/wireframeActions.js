@@ -13,12 +13,20 @@ import {
   UPDATE_TEXT,
   UPDATE_BACKGROUND_COLOR,
   UPDATE_BORDER_COLOR,
-  DELETE_CONTROL
+  DELETE_CONTROL,
+  INITIATE_LOCAL_WIREFRAME
 } from './types';
 
 export const updateDimensions = () => {
   return {
     type: UPDATE_DIMENSIONS
+  };
+};
+
+export const initiateLocalWireframe = localWireframe => {
+  return {
+    type: INITIATE_LOCAL_WIREFRAME,
+    payload: localWireframe
   };
 };
 

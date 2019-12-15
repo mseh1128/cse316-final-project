@@ -13,26 +13,17 @@ import {
   UPDATE_BACKGROUND_COLOR,
   UPDATE_BORDER_COLOR,
   UPDATE_TEXT,
-  DELETE_CONTROL
+  DELETE_CONTROL,
+  INITIATE_LOCAL_WIREFRAME
 } from '../actions/types';
 
-const initialState = {
-  key: 0,
-  name: 'CSE 316 Final Project',
-  owner: 'Manav Sehgal',
-  width: 500,
-  height: 500,
-  realWidth: 500,
-  realHeight: 500,
-  zoomFactor: '2',
-  controls: [],
-  updateDimensionsEnabled: false,
-  selectedControlID: null
-};
+const initialState = {};
 
 export default function(state = initialState, action) {
   console.log('In wireframe reducer');
   switch (action.type) {
+    case INITIATE_LOCAL_WIREFRAME:
+      return action.payload;
     case UPDATE_DIMENSIONS:
       return {
         ...state,

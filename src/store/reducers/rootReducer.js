@@ -6,7 +6,7 @@ import wireframeReducer from './wireframeReducer';
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  Wireframe: wireframeReducer,
+  wireframe: wireframeReducer,
   firestore: firestoreReducer,
   firebase: firebaseReducer
 });

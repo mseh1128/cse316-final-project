@@ -9,7 +9,6 @@ import {
   updateControlSize,
   setSelectedControl
 } from '../../store/actions/wireframeActions';
-// import Draggable from 'react-draggable';
 import { Rnd } from 'react-rnd';
 
 class WireframeScreen extends Component {

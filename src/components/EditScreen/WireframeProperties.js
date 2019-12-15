@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { SketchPicker } from 'react-color';
 // import { Button, Icon } from 'react-materialize';
 import { connect } from 'react-redux';
 import {
