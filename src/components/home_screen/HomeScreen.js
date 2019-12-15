@@ -3,20 +3,71 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase';
-import TodoListLinks from './TodoListLinks';
+import WireframeLinks from './WireframeLinks';
 
-import { createTodoListHandler } from '../../store/database/asynchHandler';
+import { createWireframeHandler } from '../../store/database/asynchHandler';
 
 class HomeScreen extends Component {
-  handleNewList = () => {
-    this.props.createNewList(this.goToListScreen);
-    // console.log(`The todolist id is ${todolistID}`);
-    // create a new todo list
-    // create new todolist, get its id & then do Link w/ its id
+  getLargestKey = arr => {
+    if (arr && arr.length !== 0) {
+      return Math.max.apply(
+        Math,
+        arr.map(function(o) {
+          return o.key;
+        })
+      );
+    }
+    return -1;
   };
 
-  goToListScreen = todoListID => {
-    this.props.history.push('/todoList/' + todoListID);
+  handleNewWireframe = uid => {
+    const largestKey = this.getLargestKey(this.props.wireframes);
+    // console.log('LARGEST KEY IS: ', largestKey);
+    console.log('IN HANDLE NEW WIREFRAME');
+    const { wireframes } = this.props;
+    if (!wireframes) {
+      const newWireframe = [
+        {
+          key: largestKey + 1,
+          name: '',
+          width: 500,
+          height: 500,
+          realWidth: 500,
+          realHeight: 500,
+          zoomFactor: '2',
+          controls: [],
+          updateDimensionsEnabled: false,
+          selectedControlID: null
+        }
+      ];
+      this.props.createNewWireframe(
+        this.goToWireframeScreen,
+        uid,
+        newWireframe
+      );
+    } else {
+      this.props.wireframes.push({
+        key: largestKey + 1,
+        name: '',
+        width: 500,
+        height: 500,
+        realWidth: 500,
+        realHeight: 500,
+        zoomFactor: '2',
+        controls: [],
+        updateDimensionsEnabled: false,
+        selectedControlID: null
+      });
+      this.props.createNewWireframe(
+        this.goToWireframeScreen,
+        uid,
+        this.props.wireframes
+      );
+    }
+  };
+
+  goToWireframeScreen = wireframeID => {
+    this.props.history.push('/wireframe/' + wireframeID);
   };
 
   render() {
@@ -24,11 +75,13 @@ class HomeScreen extends Component {
       return <Redirect to="/login" />;
     }
 
+    const { uid } = this.props.auth;
+
     return (
       <div className="dashboard container">
         <div className="row">
           <div className="col s12 m4">
-            <TodoListLinks />
+            <WireframeLinks />
           </div>
 
           <div className="col s8">
@@ -40,9 +93,9 @@ class HomeScreen extends Component {
             <div className="home_new_list_container">
               <button
                 className="home_new_list_button"
-                onClick={this.handleNewList}
+                onClick={() => this.handleNewWireframe(uid)}
               >
-                Create a New To Do List
+                Create a New Wireframe
               </button>
             </div>
           </div>
@@ -53,20 +106,33 @@ class HomeScreen extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log('Home screen state is: ');
-  console.log(state);
+  // console.log('Home screen state is: ');
+  // console.log(state);
+  let wireframes = null;
+  if (!state.firestore.data || !state.firebase.auth) {
+  } else {
+    const userID = state.firebase.auth.uid;
+    if (state.firestore.data.users != null && userID) {
+      console.log(state.firestore.data.users[userID]);
+      wireframes = state.firestore.data.users[userID].wireframes;
+    }
+  }
   return {
+    wireframes,
     auth: state.firebase.auth
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  createNewList: cb => dispatch(createTodoListHandler(cb))
+  createNewWireframe: (cb, uid, keyVal) =>
+    dispatch(createWireframeHandler(cb, uid, keyVal))
 });
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  firestoreConnect([
-    { collection: 'todoLists', orderBy: ['lastModified', 'desc'] }
+  firestoreConnect(() => [
+    {
+      collection: 'users'
+    }
   ])
 )(HomeScreen);
