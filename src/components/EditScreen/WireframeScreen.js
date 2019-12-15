@@ -274,12 +274,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  firestoreConnect(() => [
-    {
-      collection: 'users'
-    }
-  ])
-)(WireframeScreen);
-// export default connect(mapStateToProps, mapDispatchToProps)(WireframeScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(WireframeScreen);

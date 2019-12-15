@@ -21,7 +21,7 @@ export const createWireframeHandler = (cb, uid, newWireframeArr) => (
     })
     .catch(err => {
       console.error('Error adding document: ', err);
-      dispatch(actionCreators.createTodoListError(err));
+      // dispatch(actionCreators.createTodoListError(err));
     });
 };
 
@@ -40,23 +40,32 @@ export const createWireframeHandler = (cb, uid, newWireframeArr) => (
 //     .catch(err => console.log(err));
 // };
 
-// export const updateWireframe = (todoList, docID) => (
-//   dispatch,
-//   getState,
-//   { getFirestore }
-// ) => {
-//   const fireStore = getFirestore();
-//   console.log('UPDATING TODO LIST');
-//   console.log(todoList);
-//   console.log('DOC ID IS');
-//   console.log(docID);
-//   fireStore
-//     .collection('todoLists')
-//     .doc(docID)
-//     .update(todoList)
-//     // .then(() => (cb ? cb() : null));
-//     .catch(err => console.log(err));
-// };
+export const updateWireframeHandler = (wireframes, uid) => (
+  dispatch,
+  getState,
+  { getFirestore }
+) => {
+  const fireStore = getFirestore();
+
+  console.log('UPDATING WIREFRAME');
+  console.log(wireframes);
+  console.log('uid IS');
+  console.log(uid);
+
+  fireStore
+    .collection('users')
+    .doc(uid)
+    .update({
+      wireframes
+    })
+    .then(() => {
+      console.log('Successfully updated!');
+    })
+    .catch(err => {
+      console.log('Update failed!');
+      console.error(err);
+    });
+};
 
 // export const updateTodoItemHandler = (newTodoList, cb, newItemID) => (
 //   dispatch,

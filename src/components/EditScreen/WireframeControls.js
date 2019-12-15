@@ -197,7 +197,12 @@ class WireframeControls extends Component {
             waves="light"
             icon={<Icon>zoom_out</Icon>}
           />
-          <Button flat node="button" waves="light">
+          <Button
+            onClick={() => this.props.saveWireframe()}
+            flat
+            node="button"
+            waves="light"
+          >
             Save
           </Button>
           <Button flat node="button" waves="light">

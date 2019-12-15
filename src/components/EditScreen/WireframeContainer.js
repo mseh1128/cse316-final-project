@@ -3,12 +3,14 @@ import WireframeScreen from './WireframeScreen';
 import WireframeControls from './WireframeControls';
 import WireframeProperties from './WireframeProperties';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import {
   deleteControl,
   initiateLocalWireframe
 } from '../../store/actions/wireframeActions';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
+import { updateWireframeHandler } from '../../store/database/asynchHandler';
 
 class WireframeContainer extends Component {
   constructor() {
@@ -58,10 +60,29 @@ class WireframeContainer extends Component {
     }
   }
 
+  saveWireframeToDB = () => {
+    console.log('Trying to save to database');
+    const { wireframe, wireframeIndex, allWireframes } = this.props;
+    console.log('Updated wireframe is: ');
+    console.log(wireframe);
+    console.log('Wireframe index is: ');
+    console.log(wireframeIndex);
+    console.log('ALL WIREFRAMES BEFORE');
+    console.log(allWireframes);
+    allWireframes[wireframeIndex] = wireframe;
+    console.log('ALL WIREFRAMES AFTER');
+    console.log(allWireframes);
+    // this.props.onUpdateWireframeHandler(wireframes);
+  };
+
   render() {
     // console.log('IN WIREFRAME CONTAINER RENDER');
     // console.log('props are: ');
     // console.log(this.props.wireframe);
+    if (!this.props.auth.uid) {
+      return <Redirect to="/login" />;
+    }
+
     if (!this.props.wireframe) {
       return <div>Still rendering!</div>;
     }
@@ -69,7 +90,7 @@ class WireframeContainer extends Component {
     return (
       <div className="wf-container">
         <div className="first-container">
-          <WireframeControls />
+          <WireframeControls saveWireframe={this.saveWireframeToDB} />
         </div>
         <div className="second-container">
           <WireframeScreen />
@@ -91,13 +112,19 @@ const mapStateToProps = (state, ownProps) => {
   key = parseInt(key);
   // console.log(key);
   let firestoreWireframe = null;
+  let allWireframes;
+  let wireframeIndex = null;
   if (!state.firestore.data || !state.firebase.auth) {
   } else {
     const userID = state.firebase.auth.uid;
     if (state.firestore.data.users != null && userID) {
       // console.log(state.firestore.data.users[userID]);
       // console.log(state.firestore.data.users[userID].wireframes);
+      allWireframes = state.firestore.data.users[userID].wireframes;
       firestoreWireframe = state.firestore.data.users[userID].wireframes.find(
+        indWireframe => indWireframe.key === key
+      );
+      wireframeIndex = state.firestore.data.users[userID].wireframes.findIndex(
         indWireframe => indWireframe.key === key
       );
     }
@@ -105,7 +132,9 @@ const mapStateToProps = (state, ownProps) => {
   return {
     globalWireframe: firestoreWireframe,
     wireframe: state.wireframe,
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    allWireframes,
+    wireframeIndex
   };
 };
 
@@ -116,6 +145,9 @@ const mapDispatchToProps = dispatch => {
     },
     onInitiateLocalWireframe: localWireframe => {
       dispatch(initiateLocalWireframe(localWireframe));
+    },
+    onUpdateWireframeHandler: (wireframes, uid) => {
+      dispatch(updateWireframeHandler(wireframes, uid));
     }
   };
 };

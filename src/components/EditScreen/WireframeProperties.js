@@ -156,7 +156,8 @@ class WireframeProperties extends Component {
                   borderRadius: '5px',
                   width: '60%',
                   paddingLeft: '10px',
-                  color: 'black'
+                  color: 'black',
+                  marginLeft: '20%'
                 }}
               />
             </div>
