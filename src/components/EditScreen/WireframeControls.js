@@ -15,6 +15,7 @@ class WireframeControls extends Component {
   }
 
   onChange = event => {
+    console.log('Reached here atleast');
     const re = /^[0-9\b]+$/;
 
     const target = event.target;

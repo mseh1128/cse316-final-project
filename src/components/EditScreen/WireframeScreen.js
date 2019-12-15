@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { firestoreConnect } from 'react-redux-firebase';
 import Label from './Controls/Label.js';
 import Container from './Controls/Container.js';
 import TextButton from './Controls/TextButton.js';
@@ -218,12 +220,18 @@ class WireframeScreen extends Component {
   };
 
   render() {
+    console.log('WIREFRAME SCREEN BEING RENDERED');
+    console.log('PROPS ARE: ');
+    console.log(this.props);
     const classes = ['outer-box'];
     const { realWidth, realHeight, controls } = this.props.wireframe;
     if (!this.state.heightOverflow) classes.push('no-height-overflow');
     if (!this.state.widthOverflow) classes.push('no-width-overflow');
     const classesAsStr = classes.join(' ');
-    const controlComponents = this.renderControls(controls);
+    let controlComponents = null;
+    if (controls && controls.length !== 0) {
+      controlComponents = this.renderControls(controls);
+    }
     console.log('Control components are: ');
     console.log(controlComponents);
     console.log('CLASS NAME IS:', classesAsStr);
@@ -244,9 +252,13 @@ class WireframeScreen extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  wireframe: state.wireframe
-});
+const mapStateToProps = state => {
+  console.log('IN MAP STATE TO PROPS OF WIREFRAME SCREEN');
+  console.log(state);
+  return {
+    wireframe: state.wireframe
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -262,4 +274,12 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(WireframeScreen);
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  firestoreConnect(() => [
+    {
+      collection: 'users'
+    }
+  ])
+)(WireframeScreen);
+// export default connect(mapStateToProps, mapDispatchToProps)(WireframeScreen);

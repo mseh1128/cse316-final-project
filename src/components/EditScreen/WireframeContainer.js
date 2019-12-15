@@ -24,28 +24,38 @@ class WireframeContainer extends Component {
   // }
 
   componentWillReceiveProps(nextProps) {
-    console.log('In comp will receive props!');
-    console.log(nextProps);
-    if (!this.props.localWireframe && nextProps.globalWireframe != null) {
-      console.log('GLOBAL WIREFRAME WAS NOT NULL!');
+    console.log('CWRP: In comp will receive props!');
+    // console.log(nextProps);
+    console.log('CWRP: this.props.wireframe');
+    console.log(this.props.wireframe);
+    console.log('CWRP: nextProps.globalWireframe');
+    console.log(nextProps.globalWireframe);
+    const wireframeEmpty =
+      Object.entries(this.props.wireframe).length === 0 &&
+      this.props.wireframe.constructor === Object;
+
+    if (wireframeEmpty && nextProps.globalWireframe != null) {
+      console.log('CWRP: GLOBAL WIREFRAME WAS NOT NULL!');
       this.props.onInitiateLocalWireframe(nextProps.globalWireframe);
+      return;
     }
-    // need to update state
-    // document.addEventListener('keydown', event => {
-    //   const { controls, selectedControlID } = this.props.wireframe;
-    //   if (
-    //     event.key === 'Delete' &&
-    //     this.props.wireframe.selectedControlID !== null
-    //   ) {
-    //     // ie if delete was pressed & wireframe element is selected
-    //     // we want to find its index & send a delete command!
-    //     const controlIdx = controls.findIndex(
-    //       control => control.key === parseInt(selectedControlID)
-    //     );
-    //     console.log('delete control index is: ' + controlIdx);
-    //     this.props.onDeleteControl(controlIdx);
-    //   }
-    // });
+    if (!this.props.wireframe && nextProps.wireframe) {
+      document.addEventListener('keydown', event => {
+        const { controls, selectedControlID } = this.props.wireframe;
+        if (
+          event.key === 'Delete' &&
+          this.props.wireframe.selectedControlID !== null
+        ) {
+          // ie if delete was pressed & wireframe element is selected
+          // we want to find its index & send a delete command!
+          const controlIdx = controls.findIndex(
+            control => control.key === parseInt(selectedControlID)
+          );
+          console.log('delete control index is: ' + controlIdx);
+          this.props.onDeleteControl(controlIdx);
+        }
+      });
+    }
   }
 
   render() {
@@ -54,10 +64,8 @@ class WireframeContainer extends Component {
     // console.log(this.props.wireframe);
     if (!this.props.wireframe) {
       return <div>Still rendering!</div>;
-    } else {
-      // mapDispatchToProps()
-      return <div>Finised rendering now!</div>;
     }
+
     return (
       <div className="wf-container">
         <div className="first-container">
@@ -75,20 +83,20 @@ class WireframeContainer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log('IN MAP STATE TO PROPS IN WIREFRAME CONTAINER');
-  console.log('State is: ');
-  console.log(state);
-  console.log('Key is: ');
+  // console.log('IN MAP STATE TO PROPS IN WIREFRAME CONTAINER');
+  // console.log('State is: ');
+  // console.log(state);
+  // console.log('Key is: ');
   let { key } = ownProps.match.params;
   key = parseInt(key);
-  console.log(key);
+  // console.log(key);
   let firestoreWireframe = null;
   if (!state.firestore.data || !state.firebase.auth) {
   } else {
     const userID = state.firebase.auth.uid;
     if (state.firestore.data.users != null && userID) {
       // console.log(state.firestore.data.users[userID]);
-      console.log(state.firestore.data.users[userID].wireframes);
+      // console.log(state.firestore.data.users[userID].wireframes);
       firestoreWireframe = state.firestore.data.users[userID].wireframes.find(
         indWireframe => indWireframe.key === key
       );

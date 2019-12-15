@@ -31,6 +31,7 @@ export const initiateLocalWireframe = localWireframe => {
 };
 
 export const updateWidth = updatedWidth => {
+  console.log('in update width');
   return {
     type: UPDATE_WIDTH,
     payload: updatedWidth

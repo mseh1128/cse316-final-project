@@ -62,7 +62,10 @@ class WireframeProperties extends Component {
 
   render() {
     const { selectedControlID } = this.props.wireframe;
-    if (selectedControlID !== null) {
+    console.log('IN WIREFRAME PROPERTIES');
+    console.log('selectedControlID is: ');
+    console.log(selectedControlID);
+    if (selectedControlID != null) {
       const controlIdx = this.props.wireframe.controls.findIndex(
         control => control.key === selectedControlID
       );
