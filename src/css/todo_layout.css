@@ -1,0 +1,229 @@
+html {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100%;
+}
+
+body {
+  position: absolute;
+  width: 80%;
+  left: 10%;
+  top: 5%;
+}
+
+div.banner {
+  padding: 20px;
+  margin-top: 60px;
+}
+
+form {
+  padding: 20px;
+  margin-top: 60px;
+}
+
+form button,
+form h5 {
+  margin: 20px 0;
+}
+
+input[type="text"]:not(.browser-default):focus:not([readonly]),
+input[type="email"]:not(.browser-default):focus:not([readonly]),
+input[type="password"]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
+  border-color: #ec407a;
+  box-shadow: none;
+}
+
+input[type="text"]:not(.browser-default):focus:not([readonly]) + label,
+textarea.materialize-textarea:focus:not([readonly]) + label,
+input[type="email"]:not(.browser-default):focus:not([readonly]) + label,
+input[type="password"]:not(.browser-default):focus:not([readonly]) + label {
+  color: #ec407a !important;
+}
+
+.card-wrapper {
+  display: flex;
+}
+
+.new_item_div_container {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.list_item_header_card {
+  background-color: #26a69a;
+}
+
+.list_item_card,
+.list_item_add_card,
+.list_item_header_card,
+.list_item_create_new_item_container {
+  position: relative;
+  height: 50px;
+  grid-row-gap: 0px;
+  grid-column-gap: 50px;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.list_item_task_header,
+.list_item_due_date_header,
+.list_item_status_header {
+  font-weight: bold;
+  font-size: 24pt;
+  position: absolute;
+  top: 5%;
+}
+
+.list_item_card_description {
+  font-weight: bold;
+  font-size: 14pt;
+}
+
+.list_item_card_description {
+  position: absolute;
+  left: 2%;
+}
+
+.list_item_card_assigned_to,
+.list_item_card_due_date,
+.list_item_card_completed,
+.list_item_card_pending {
+  font-weight: normal;
+  font-size: 12pt;
+}
+
+.list_item_task_header,
+.list_item_card_assigned_to {
+  left: 2%;
+}
+
+.list_item_card_assigned_to,
+.list_item_card_due_date,
+.list_item_card_completed,
+.list_item_card_pending {
+  position: absolute;
+  top: 50%;
+}
+
+.list_item_status_header,
+.list_item_card_completed,
+.list_item_card_pending {
+  left: 60%;
+}
+
+.list_item_card_completed {
+  color: green;
+}
+
+.list_item_card_pending {
+  color: red;
+}
+
+.list_item_due_date_header,
+.list_item_card_due_date {
+  left: 35%;
+}
+
+strong {
+  font-weight: bold;
+}
+
+.fixed-action-btn {
+  position: relative;
+  right: 20px;
+  bottom: 0px;
+}
+
+.btn-floating {
+  width: 50px;
+  height: 50px;
+  padding: 0px;
+  margin-bottom: 10px;
+}
+
+.list_item_due_date_header {
+  left: 32%;
+}
+
+.list_item_status_header {
+  left: 56%;
+}
+
+.list_item_task_header:hover,
+.list_item_due_date_header:hover,
+.list_item_status_header:hover {
+  color: var(--swatch-primary);
+}
+
+.list_item_card:hover {
+  background-color: var(--swatch-complement);
+}
+
+.list_item_create_new_item_container:hover {
+  background-color: #26a69a;
+}
+
+.list_item_create_new_item_container {
+  display: flex;
+  justify-content: space-around;
+}
+
+#todo_home,
+#todo_list,
+#todo_item,
+#edit_item_container {
+  background-color: var(--swatch-primary);
+}
+
+#edit_item_container,
+.item_prompts {
+  font-weight: bold;
+}
+
+.item_form_values_container {
+  display: grid;
+  grid-template-columns: 1fr 7fr;
+}
+
+.item_field_container {
+  display: flex;
+  align-items: center;
+}
+
+.item_field_container input {
+  width: 100%;
+  height: 1.75em;
+}
+
+#item_completed_container input {
+  border-radius: 0.4em;
+  font-size: 1.15em;
+  background-color: #f0f0f0;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px 0px 10px;
+}
+
+.modal-button {
+  position: relative;
+  top: 15px;
+}
+
+#delete_confirm_text {
+  font-weight: bold;
+}
