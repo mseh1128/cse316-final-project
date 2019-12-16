@@ -15,7 +15,8 @@ import {
   UPDATE_BORDER_COLOR,
   DELETE_CONTROL,
   INITIATE_LOCAL_WIREFRAME,
-  REMOVE_LOCAL_WIREFRAME
+  REMOVE_LOCAL_WIREFRAME,
+  UPDATE_NAME
 } from './types';
 
 export const updateDimensions = () => {
@@ -90,6 +91,13 @@ export const updateText = (controlIdx, updatedText) => {
   return {
     type: UPDATE_TEXT,
     payload: [controlIdx, updatedText]
+  };
+};
+
+export const updateName = updatedName => {
+  return {
+    type: UPDATE_NAME,
+    payload: updatedName
   };
 };
 
