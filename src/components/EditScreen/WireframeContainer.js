@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Modal, Button } from 'react-materialize';
 import WireframeScreen from './WireframeScreen';
 import WireframeControls from './WireframeControls';
 import WireframeProperties from './WireframeProperties';
@@ -41,9 +42,11 @@ class WireframeContainer extends Component {
       console.log('CWRP: GLOBAL WIREFRAME WAS NOT NULL!');
       const { wireframeIndex, allWireframes } = this.props;
       const { uid } = this.props.auth;
-      nextProps.globalWireframe.lastModified = new Date();
-      allWireframes[wireframeIndex] = nextProps.globalWireframe;
-      this.props.onUpdateWireframeHandler(allWireframes, uid);
+      if (allWireframes != null) {
+        nextProps.globalWireframe.lastModified = new Date();
+        allWireframes[wireframeIndex] = nextProps.globalWireframe;
+        this.props.onUpdateWireframeHandler(allWireframes, uid);
+      }
       this.props.onInitiateLocalWireframe(nextProps.globalWireframe);
       return;
     }
@@ -80,6 +83,23 @@ class WireframeContainer extends Component {
     this.props.history.push('/');
   };
 
+  checkWireframeChange = () => {
+    const { wireframe, wireframeIndex, allWireframes } = this.props;
+    if (allWireframes == null || wireframe == null) {
+      return false;
+    }
+    delete allWireframes[wireframeIndex].lastModified;
+    delete wireframe.lastModified;
+    if (
+      JSON.stringify(allWireframes[wireframeIndex]) !==
+      JSON.stringify(wireframe)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   render() {
     // console.log('IN WIREFRAME CONTAINER RENDER');
     // console.log('props are: ');
@@ -98,6 +118,7 @@ class WireframeContainer extends Component {
           <WireframeControls
             saveWireframe={this.saveWireframeToDB}
             closeWireframe={this.closeWireframe}
+            checkWireframeChange={this.checkWireframeChange.bind(this)}
           />
         </div>
         <div className="second-container">

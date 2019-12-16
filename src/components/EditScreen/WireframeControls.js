@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Button, Icon } from 'react-materialize';
+import { Button, Icon, Modal } from 'react-materialize';
 import { connect } from 'react-redux';
 import {
   updateWidth,
@@ -189,6 +189,9 @@ class WireframeControls extends Component {
         </Button>
       );
     }
+    let closeBtn = null;
+    const wireframeChanged = this.props.checkWireframeChange();
+
     return (
       <Fragment>
         <div className="wireframe-properties">
@@ -212,14 +215,71 @@ class WireframeControls extends Component {
           >
             Save
           </Button>
-          <Button
-            flat
-            onClick={() => this.props.closeWireframe()}
-            node="button"
-            waves="light"
-          >
-            Close
-          </Button>
+          {wireframeChanged ? (
+            <Modal
+              actions={[]}
+              bottomSheet={false}
+              fixedFooter={false}
+              header="Close Modal"
+              id="modal-0"
+              options={{
+                dismissible: true,
+                endingTop: '10%',
+                inDuration: 250,
+                onCloseEnd: null,
+                onCloseStart: null,
+                onOpenEnd: null,
+                onOpenStart: null,
+                opacity: 0.5,
+                outDuration: 250,
+                preventScrolling: true,
+                startingTop: '4%'
+              }}
+              trigger={
+                <Button
+                  flat
+                  onClick={() => console.log('IM just a trigger')}
+                  node="button"
+                  waves="light"
+                >
+                  Close
+                </Button>
+              }
+            >
+              Do you want to save your modal?
+              <br />
+              <Button
+                style={{ marginTop: '10px' }}
+                onClick={() => {
+                  this.props.saveWireframe();
+                  this.props.closeWireframe();
+                }}
+                node="button"
+                waves="light"
+              >
+                Yes
+              </Button>
+              <Button
+                style={{ marginTop: '10px' }}
+                onClick={() => {
+                  this.props.closeWireframe();
+                }}
+                node="button"
+                waves="light"
+              >
+                No
+              </Button>
+            </Modal>
+          ) : (
+            <Button
+              flat
+              onClick={() => this.props.closeWireframe()}
+              node="button"
+              waves="light"
+            >
+              Close
+            </Button>
+          )}
         </div>
         <div className="wireframe-dimensions">
           <div>
