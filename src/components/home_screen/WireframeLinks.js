@@ -25,6 +25,16 @@ class WireframeLinks extends React.Component {
   }
 }
 
+const dueDateSortComparator = (a, b) => {
+  if (a.lastModified > b.lastModified) {
+    return -1;
+  }
+  if (b.lastModified > a.lastModified) {
+    return 1;
+  }
+  return 0;
+};
+
 const mapStateToProps = (state, ownProps) => {
   // console.log('wireframe screen state is: ');
   // console.log('MAP STATE TO PROPS FOR WIREFRAME LINKS');
@@ -40,6 +50,7 @@ const mapStateToProps = (state, ownProps) => {
       state.firestore.data.users[userID]
     ) {
       wireframes = state.firestore.data.users[userID].wireframes;
+      wireframes.sort(dueDateSortComparator);
     }
   }
 

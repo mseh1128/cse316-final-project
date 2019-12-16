@@ -42,7 +42,8 @@ class HomeScreen extends Component {
           zoomFactor: '2',
           controls: [],
           updateDimensionsEnabled: false,
-          selectedControlID: null
+          selectedControlID: null,
+          lastModified: new Date()
         }
       ];
       this.props.createNewWireframe(
@@ -62,7 +63,8 @@ class HomeScreen extends Component {
         zoomFactor: '2',
         controls: [],
         updateDimensionsEnabled: false,
-        selectedControlID: null
+        selectedControlID: null,
+        lastModified: new Date()
       });
       this.props.createNewWireframe(
         this.goToWireframeScreen,

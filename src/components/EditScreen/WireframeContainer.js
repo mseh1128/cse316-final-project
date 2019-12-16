@@ -39,6 +39,11 @@ class WireframeContainer extends Component {
 
     if (wireframeEmpty && nextProps.globalWireframe != null) {
       console.log('CWRP: GLOBAL WIREFRAME WAS NOT NULL!');
+      const { wireframeIndex, allWireframes } = this.props;
+      const { uid } = this.props.auth;
+      nextProps.globalWireframe.lastModified = new Date();
+      allWireframes[wireframeIndex] = nextProps.globalWireframe;
+      this.props.onUpdateWireframeHandler(allWireframes, uid);
       this.props.onInitiateLocalWireframe(nextProps.globalWireframe);
       return;
     }

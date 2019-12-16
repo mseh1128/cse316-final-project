@@ -1,5 +1,4 @@
 import * as actionCreators from '../actions/actionCreators.js';
-import { sortTasksHeader } from '../../utils/index';
 
 export const createWireframeHandler = (cb, uid, newWireframeArr, key) => (
   dispatch,
