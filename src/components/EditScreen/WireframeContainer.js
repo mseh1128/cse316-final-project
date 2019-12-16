@@ -63,16 +63,11 @@ class WireframeContainer extends Component {
   saveWireframeToDB = () => {
     console.log('Trying to save to database');
     const { wireframe, wireframeIndex, allWireframes } = this.props;
-    console.log('Updated wireframe is: ');
-    console.log(wireframe);
-    console.log('Wireframe index is: ');
-    console.log(wireframeIndex);
-    console.log('ALL WIREFRAMES BEFORE');
-    console.log(allWireframes);
+    const { uid } = this.props.auth;
+    // console.log('uid is: ');
+    // console.log(uid);
     allWireframes[wireframeIndex] = wireframe;
-    console.log('ALL WIREFRAMES AFTER');
-    console.log(allWireframes);
-    // this.props.onUpdateWireframeHandler(wireframes);
+    this.props.onUpdateWireframeHandler(allWireframes, uid);
   };
 
   render() {
