@@ -34,7 +34,11 @@ const mapStateToProps = (state, ownProps) => {
   if (!state.firestore.data || !state.firebase.auth) {
   } else {
     const userID = state.firebase.auth.uid;
-    if (state.firestore.data.users != null && userID) {
+    if (
+      state.firestore.data.users != null &&
+      userID &&
+      state.firestore.data.users[userID]
+    ) {
       wireframes = state.firestore.data.users[userID].wireframes;
     }
   }

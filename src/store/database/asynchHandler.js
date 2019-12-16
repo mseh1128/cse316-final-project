@@ -1,14 +1,14 @@
 import * as actionCreators from '../actions/actionCreators.js';
 import { sortTasksHeader } from '../../utils/index';
 
-export const createWireframeHandler = (cb, uid, newWireframeArr) => (
+export const createWireframeHandler = (cb, uid, newWireframeArr, key) => (
   dispatch,
   getState,
   { getFirestore }
 ) => {
   const fireStore = getFirestore();
-  console.log('USER ID IS ');
-  console.log(uid);
+  console.log('WIREFRAME KEY IS ');
+  console.log(key);
   fireStore
     .collection('users')
     .doc(uid) // change to the current user id
@@ -16,11 +16,9 @@ export const createWireframeHandler = (cb, uid, newWireframeArr) => (
     .update({
       wireframes: newWireframeArr
     })
-    .then(function() {
-      console.log('Document Added ');
-    })
+    .then(() => cb(key))
     .catch(err => {
-      console.error('Error adding document: ', err);
+      console.log('Error adding document: ', err);
       // dispatch(actionCreators.createTodoListError(err));
     });
 };
@@ -125,7 +123,8 @@ export const registerHandler = (newUser, firebase) => (
         .set({
           firstName: newUser.firstName,
           lastName: newUser.lastName,
-          initials: `${newUser.firstName[0]}${newUser.lastName[0]}`
+          initials: `${newUser.firstName[0]}${newUser.lastName[0]}`,
+          wireframes: []
         })
     )
     .then(() => {

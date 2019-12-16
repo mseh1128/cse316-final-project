@@ -8,6 +8,10 @@ import WireframeLinks from './WireframeLinks';
 import { createWireframeHandler } from '../../store/database/asynchHandler';
 
 class HomeScreen extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   getLargestKey = arr => {
     if (arr && arr.length !== 0) {
       return Math.max.apply(
@@ -22,13 +26,14 @@ class HomeScreen extends Component {
 
   handleNewWireframe = uid => {
     const largestKey = this.getLargestKey(this.props.wireframes);
+    const keyIdx = largestKey + 1;
     // console.log('LARGEST KEY IS: ', largestKey);
     console.log('IN HANDLE NEW WIREFRAME');
     const { wireframes } = this.props;
     if (!wireframes) {
       const newWireframe = [
         {
-          key: largestKey + 1,
+          key: keyIdx,
           name: '',
           width: 500,
           height: 500,
@@ -43,11 +48,12 @@ class HomeScreen extends Component {
       this.props.createNewWireframe(
         this.goToWireframeScreen,
         uid,
-        newWireframe
+        newWireframe,
+        keyIdx
       );
     } else {
       this.props.wireframes.push({
-        key: largestKey + 1,
+        key: keyIdx,
         name: '',
         width: 500,
         height: 500,
@@ -61,14 +67,17 @@ class HomeScreen extends Component {
       this.props.createNewWireframe(
         this.goToWireframeScreen,
         uid,
-        this.props.wireframes
+        this.props.wireframes,
+        keyIdx
       );
     }
   };
 
-  goToWireframeScreen = wireframeID => {
+  goToWireframeScreen = wireframeKey => {
+    console.log('In HERE');
+    console.log('KEY WAS: ', wireframeKey);
     // updateStoreContents;
-    this.props.history.push('/wireframe/' + wireframeID);
+    this.props.history.push('/wireframe/' + wireframeKey);
   };
 
   render() {
@@ -113,7 +122,13 @@ const mapStateToProps = state => {
   if (!state.firestore.data || !state.firebase.auth) {
   } else {
     const userID = state.firebase.auth.uid;
-    if (state.firestore.data.users != null && userID) {
+    if (
+      state.firestore.data.users != null &&
+      userID &&
+      state.firestore.data.users[userID]
+    ) {
+      console.log('in map state to props for home screen');
+      console.log(userID);
       console.log(state.firestore.data.users[userID]);
       wireframes = state.firestore.data.users[userID].wireframes;
     }
@@ -125,8 +140,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  createNewWireframe: (cb, uid, keyVal) =>
-    dispatch(createWireframeHandler(cb, uid, keyVal))
+  createNewWireframe: (cb, uid, newWireframeArr, key) =>
+    dispatch(createWireframeHandler(cb, uid, newWireframeArr, key))
 });
 
 export default compose(
