@@ -15,11 +15,8 @@ import {
   UPDATE_TEXT,
   DELETE_CONTROL,
   INITIATE_LOCAL_WIREFRAME,
-<<<<<<< HEAD
-  REMOVE_LOCAL_WIREFRAME
-=======
+  REMOVE_LOCAL_WIREFRAME,
   UPDATE_NAME
->>>>>>> 343b49726e9ce3cc77084748b3c44d6c3a52e2a9
 } from '../actions/types';
 
 const initialState = {};
