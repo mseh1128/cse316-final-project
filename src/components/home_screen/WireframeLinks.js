@@ -31,6 +31,7 @@ class WireframeLinks extends React.Component {
           wireframes.map(wireframe => (
             <WireframeCard
               wireframe={wireframe}
+              key={wireframe.key}
               deleteWireframe={this.deleteWireframe.bind(this)}
             />
           ))}

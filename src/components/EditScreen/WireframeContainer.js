@@ -8,7 +8,8 @@ import { Redirect } from 'react-router-dom';
 import {
   deleteControl,
   initiateLocalWireframe,
-  removeLocalWireframe
+  removeLocalWireframe,
+  addControl
 } from '../../store/actions/wireframeActions';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
@@ -18,6 +19,9 @@ class WireframeContainer extends Component {
   componentWillUnmount() {
     this.props.onRemoveLocalWireframe();
   }
+  setupEventListener = false;
+  controlKeyPressed = false;
+  DKeyPressed = false;
 
   // componentWillReceiveProps(nextProps) {
   //   console.log('In comp will receive props!');
@@ -26,6 +30,19 @@ class WireframeContainer extends Component {
   //     //make a api call here
   //   }
   // }
+  getLargestKey = () => {
+    const { controls } = this.props.wireframe;
+    console.log(controls);
+    if (controls && controls.length !== 0) {
+      return Math.max.apply(
+        Math,
+        controls.map(function(o) {
+          return o.key;
+        })
+      );
+    }
+    return -1;
+  };
 
   componentWillReceiveProps(nextProps) {
     console.log('CWRP: In comp will receive props!');
@@ -50,9 +67,9 @@ class WireframeContainer extends Component {
       this.props.onInitiateLocalWireframe(nextProps.globalWireframe);
       return;
     }
-    if (!this.props.wireframe && nextProps.wireframe) {
+    if (this.props.wireframe && !this.setupEventListener) {
+      const { controls } = this.props.wireframe;
       document.addEventListener('keydown', event => {
-        const { controls, selectedControlID } = this.props.wireframe;
         if (
           event.key === 'Delete' &&
           this.props.wireframe.selectedControlID !== null
@@ -60,12 +77,59 @@ class WireframeContainer extends Component {
           // ie if delete was pressed & wireframe element is selected
           // we want to find its index & send a delete command!
           const controlIdx = controls.findIndex(
-            control => control.key === parseInt(selectedControlID)
+            control =>
+              control.key === parseInt(this.props.wireframe.selectedControlID)
           );
-          console.log('delete control index is: ' + controlIdx);
           this.props.onDeleteControl(controlIdx);
+        } else if (event.key === 'Control') {
+          console.log('control was clicked');
+          this.controlKeyPressed = true;
+        } else if (event.key === 'd') {
+          console.log('d was clicked');
+          this.DKeyPressed = true;
         }
       });
+
+      document.addEventListener('keyup', event => {
+        if (
+          this.controlKeyPressed &&
+          this.DKeyPressed &&
+          this.props.wireframe.selectedControlID !== null
+        ) {
+          console.log('Both keys were pressed!');
+          // const controlCopy = controls.find(
+          //   control => control.key === parseInt(selectedControlID)
+          // );
+          console.log('selected control id is: ');
+          console.log(this.props.wireframe.selectedControlID);
+          console.log(this.props.wireframe.controls);
+          const controlCopy = Object.assign(
+            {},
+            this.props.wireframe.controls.find(
+              control =>
+                control.key === parseInt(this.props.wireframe.selectedControlID)
+            )
+          );
+          console.log(controlCopy);
+          if (
+            controlCopy != null &&
+            Object.entries(controlCopy).length !== 0 &&
+            controlCopy.constructor === Object
+          ) {
+            console.log('IN HERE');
+            console.log('control copy is ');
+            console.log(controlCopy);
+            controlCopy.yPosition += 100;
+            controlCopy.xPosition += 100;
+            controlCopy['key'] = this.getLargestKey() + 1;
+            this.props.onAddControl(controlCopy);
+          }
+        }
+        this.controlKeyPressed = false;
+        this.DKeyPressed = false;
+      });
+
+      this.setupEventListener = true;
     }
   }
 
@@ -180,6 +244,9 @@ const mapDispatchToProps = dispatch => {
     },
     onRemoveLocalWireframe: () => {
       dispatch(removeLocalWireframe());
+    },
+    onAddControl: newControl => {
+      dispatch(addControl(newControl));
     }
   };
 };
