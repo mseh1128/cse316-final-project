@@ -22,7 +22,7 @@ class WireframeLinks extends React.Component {
     // console.log('In wireframe LINKS');
     const { wireframes } = this.props;
     if (!wireframes) {
-      return <div>Has not finished loading yet!</div>;
+      return <div>Nothing here yet!</div>;
     }
 
     return (
@@ -73,7 +73,9 @@ const mapStateToProps = (state, ownProps) => {
       state.firestore.data.users[userID]
     ) {
       wireframes = state.firestore.data.users[userID].wireframes;
-      wireframes.sort(dueDateSortComparator);
+      if (wireframes) {
+        wireframes.sort(dueDateSortComparator);
+      }
     }
   }
 
