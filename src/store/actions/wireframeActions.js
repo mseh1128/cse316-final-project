@@ -14,12 +14,19 @@ import {
   UPDATE_BACKGROUND_COLOR,
   UPDATE_BORDER_COLOR,
   DELETE_CONTROL,
-  INITIATE_LOCAL_WIREFRAME
+  INITIATE_LOCAL_WIREFRAME,
+  REMOVE_LOCAL_WIREFRAME
 } from './types';
 
 export const updateDimensions = () => {
   return {
     type: UPDATE_DIMENSIONS
+  };
+};
+
+export const removeLocalWireframe = () => {
+  return {
+    type: REMOVE_LOCAL_WIREFRAME
   };
 };
 

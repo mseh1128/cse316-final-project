@@ -6,15 +6,16 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import {
   deleteControl,
-  initiateLocalWireframe
+  initiateLocalWireframe,
+  removeLocalWireframe
 } from '../../store/actions/wireframeActions';
 import { compose } from 'redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { updateWireframeHandler } from '../../store/database/asynchHandler';
 
 class WireframeContainer extends Component {
-  constructor() {
-    super();
+  componentWillUnmount() {
+    this.props.onRemoveLocalWireframe();
   }
 
   // componentWillReceiveProps(nextProps) {
@@ -70,6 +71,10 @@ class WireframeContainer extends Component {
     this.props.onUpdateWireframeHandler(allWireframes, uid);
   };
 
+  closeWireframe = () => {
+    this.props.history.push('/');
+  };
+
   render() {
     // console.log('IN WIREFRAME CONTAINER RENDER');
     // console.log('props are: ');
@@ -85,7 +90,10 @@ class WireframeContainer extends Component {
     return (
       <div className="wf-container">
         <div className="first-container">
-          <WireframeControls saveWireframe={this.saveWireframeToDB} />
+          <WireframeControls
+            saveWireframe={this.saveWireframeToDB}
+            closeWireframe={this.closeWireframe}
+          />
         </div>
         <div className="second-container">
           <WireframeScreen />
@@ -143,6 +151,9 @@ const mapDispatchToProps = dispatch => {
     },
     onUpdateWireframeHandler: (wireframes, uid) => {
       dispatch(updateWireframeHandler(wireframes, uid));
+    },
+    onRemoveLocalWireframe: () => {
+      dispatch(removeLocalWireframe());
     }
   };
 };

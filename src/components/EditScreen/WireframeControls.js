@@ -205,7 +205,12 @@ class WireframeControls extends Component {
           >
             Save
           </Button>
-          <Button flat node="button" waves="light">
+          <Button
+            flat
+            onClick={() => this.props.closeWireframe()}
+            node="button"
+            waves="light"
+          >
             Close
           </Button>
         </div>

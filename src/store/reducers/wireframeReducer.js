@@ -14,7 +14,8 @@ import {
   UPDATE_BORDER_COLOR,
   UPDATE_TEXT,
   DELETE_CONTROL,
-  INITIATE_LOCAL_WIREFRAME
+  INITIATE_LOCAL_WIREFRAME,
+  REMOVE_LOCAL_WIREFRAME
 } from '../actions/types';
 
 const initialState = {};
@@ -24,6 +25,8 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case INITIATE_LOCAL_WIREFRAME:
       return action.payload;
+    case REMOVE_LOCAL_WIREFRAME:
+      return {};
     case UPDATE_DIMENSIONS:
       return {
         ...state,
