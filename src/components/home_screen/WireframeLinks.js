@@ -3,8 +3,21 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import WireframeCard from './WireframeCard';
+import { updateWireframeHandler } from '../../store/database/asynchHandler';
 
 class WireframeLinks extends React.Component {
+  deleteWireframe = wireframeKey => {
+    console.log('DELETE WIREFRAME CALLED');
+    console.log(wireframeKey);
+    const { wireframes } = this.props;
+    const wireframeIdx = wireframes.findIndex(
+      wireframe => wireframe.key === wireframeKey
+    );
+    wireframes.splice(wireframeIdx, 1);
+    const { uid } = this.props.auth;
+    this.props.onUpdateWireframeHandler(wireframes, uid);
+  };
+
   render() {
     // console.log('In wireframe LINKS');
     const { wireframes } = this.props;
@@ -16,9 +29,10 @@ class WireframeLinks extends React.Component {
       <div className="todo-lists section">
         {wireframes &&
           wireframes.map(wireframe => (
-            <Link to={'/wireframe/' + wireframe.key} key={wireframe.key}>
-              <WireframeCard wireframe={wireframe} />
-            </Link>
+            <WireframeCard
+              wireframe={wireframe}
+              deleteWireframe={this.deleteWireframe.bind(this)}
+            />
           ))}
       </div>
     );
@@ -33,6 +47,14 @@ const dueDateSortComparator = (a, b) => {
     return 1;
   }
   return 0;
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onUpdateWireframeHandler: (wireframes, uid) => {
+      dispatch(updateWireframeHandler(wireframes, uid));
+    }
+  };
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -60,4 +82,6 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default compose(connect(mapStateToProps))(WireframeLinks);
+export default compose(connect(mapStateToProps, mapDispatchToProps))(
+  WireframeLinks
+);

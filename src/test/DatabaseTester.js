@@ -1,7 +1,7 @@
-import React from "react";
-import { connect } from "react-redux";
-import todoJson from "./TestTodoListData.json";
-import { getFirestore } from "redux-firestore";
+import React from 'react';
+import { connect } from 'react-redux';
+import todoJson from './TestTodoListData.json';
+import { getFirestore } from 'redux-firestore';
 // import { firebase } from "./firebase";
 
 class DatabaseTester extends React.Component {
@@ -11,13 +11,13 @@ class DatabaseTester extends React.Component {
   handleClear = () => {
     const fireStore = getFirestore();
     fireStore
-      .collection("todoLists")
+      .collection('todoLists')
       .get()
       .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
-          console.log("deleting " + doc.id);
+          console.log('deleting ' + doc.id);
           fireStore
-            .collection("todoLists")
+            .collection('users')
             .doc(doc.id)
             .delete();
         });
@@ -25,25 +25,25 @@ class DatabaseTester extends React.Component {
   };
 
   handleReset = () => {
-    const fireStore = getFirestore();
-    todoJson.todoLists.forEach(todoListJson => {
-      fireStore
-        .collection("todoLists")
-        .add({
-          name: todoListJson.name,
-          owner: todoListJson.owner,
-          items: todoListJson.items,
-          lastModified: fireStore.Timestamp.now(),
-          sortCriteriaName: null,
-          sortCriteriaAsc: null
-        })
-        .then(() => {
-          console.log("DATABASE RESET");
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    });
+    // const fireStore = getFirestore();
+    // todoJson.todoLists.forEach(todoListJson => {
+    //   fireStore
+    //     .collection("users")
+    //     .add({
+    //       name: todoListJson.name,
+    //       owner: todoListJson.owner,
+    //       items: todoListJson.items,
+    //       lastModified: fireStore.Timestamp.now(),
+    //       sortCriteriaName: null,
+    //       sortCriteriaAsc: null
+    //     })
+    //     .then(() => {
+    //       console.log("DATABASE RESET");
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //     });
+    // });
   };
 
   render() {
