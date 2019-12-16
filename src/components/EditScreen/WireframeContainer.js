@@ -122,6 +122,8 @@ class WireframeContainer extends Component {
             controlCopy.yPosition += 100;
             controlCopy.xPosition += 100;
             controlCopy['key'] = this.getLargestKey() + 1;
+            this.controlKeyPressed = false;
+            this.DKeyPressed = false;
             this.props.onAddControl(controlCopy);
           }
         }
