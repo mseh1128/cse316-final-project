@@ -14,7 +14,8 @@ import {
   UPDATE_BORDER_COLOR,
   UPDATE_TEXT,
   DELETE_CONTROL,
-  INITIATE_LOCAL_WIREFRAME
+  INITIATE_LOCAL_WIREFRAME,
+  UPDATE_NAME
 } from '../actions/types';
 
 const initialState = {};
@@ -31,7 +32,6 @@ export default function(state = initialState, action) {
         realHeight: state.height,
         updateDimensionsEnabled: false
       };
-
     case UPDATE_WIDTH:
       return {
         ...state,
@@ -51,6 +51,12 @@ export default function(state = initialState, action) {
       const updatedTextNewState = { ...state };
       updatedTextNewState.controls[updateTextControlIdx]['text'] = updatedText;
       return updatedTextNewState;
+    case UPDATE_NAME:
+      //controlIdx, updatedBorderRadius
+      return {
+        ...state,
+        name: action.payload
+      };
     case UPDATE_BORDER_RADIUS:
       //controlIdx, updatedBorderRadius
       console.log('IN UPDATE BORDER RADIUS');

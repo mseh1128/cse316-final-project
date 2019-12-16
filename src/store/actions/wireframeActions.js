@@ -14,6 +14,7 @@ import {
   UPDATE_BACKGROUND_COLOR,
   UPDATE_BORDER_COLOR,
   DELETE_CONTROL,
+  UPDATE_NAME,
   INITIATE_LOCAL_WIREFRAME
 } from './types';
 
@@ -83,6 +84,13 @@ export const updateText = (controlIdx, updatedText) => {
   return {
     type: UPDATE_TEXT,
     payload: [controlIdx, updatedText]
+  };
+};
+
+export const updateName = updatedName => {
+  return {
+    type: UPDATE_NAME,
+    payload: updatedName
   };
 };
 

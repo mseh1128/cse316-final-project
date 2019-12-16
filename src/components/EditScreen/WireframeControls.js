@@ -5,7 +5,8 @@ import {
   updateWidth,
   updateHeight,
   updateDimensions,
-  addControl
+  addControl,
+  updateName
 } from '../../store/actions/wireframeActions';
 
 class WireframeControls extends Component {
@@ -37,7 +38,8 @@ class WireframeControls extends Component {
         console.log('DIDNT TYPE A NUM');
       }
     } else {
-      console.log('DIDNT TYPE A NUM');
+      // update name of wireframe
+      this.props.onUpdateName(value);
       // update other stuff here, if there is other stuff!
     }
   };
@@ -152,7 +154,12 @@ class WireframeControls extends Component {
 
   render() {
     let updateDimenionsBtn = null;
-    const { width, height, updateDimensionsEnabled } = this.props.wireframe;
+    const {
+      width,
+      height,
+      name,
+      updateDimensionsEnabled
+    } = this.props.wireframe;
     // const { width, height } = this.props.wireframe;
     if (updateDimensionsEnabled) {
       updateDimenionsBtn = (
@@ -210,6 +217,14 @@ class WireframeControls extends Component {
           </Button>
         </div>
         <div className="wireframe-dimensions">
+          <div>
+            Wireframe Name:
+            <input
+              value={name}
+              onChange={this.onChange}
+              name="wireframe-name"
+            />
+          </div>
           <div>
             Wireframe Width:
             <input
@@ -299,6 +314,9 @@ const mapDispatchToProps = dispatch => {
     },
     onAddControl: newControl => {
       dispatch(addControl(newControl));
+    },
+    onUpdateName: updatedName => {
+      dispatch(updateName(updatedName));
     }
   };
 };

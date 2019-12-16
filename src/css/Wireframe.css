@@ -15,7 +15,7 @@
 .first-container {
   /* background: green; */
   display: grid;
-  grid-template-rows: 5% 23% 72%;
+  grid-template-rows: 5% 32% 63%;
 }
 
 .wireframe-properties {
